@@ -3,7 +3,7 @@ import os
 import six.moves.urllib as urllib
 import sys
 import tarfile
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import zipfile
 import time
 from imutils.video import WebcamVideoStream
@@ -27,6 +27,7 @@ from PIL import Image
 from PIL import ImageTk
 import json
 import re
+tf.disable v2 behavior()
 
 if tf.__version__ < '1.4.0':
 	raise ImportError('Please upgrade your tensorflow installation to v1.4.* or later!')
@@ -229,7 +230,7 @@ def checkSpeed(ftime,img):
 detection_graph = tf.Graph()
 with detection_graph.as_default():
 	od_graph_def = tf.GraphDef()
-	with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+	with tf.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
 		serialized_graph = fid.read()
 		od_graph_def.ParseFromString(serialized_graph)
 		tf.import_graph_def(od_graph_def, name='')
